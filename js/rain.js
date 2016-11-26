@@ -11,7 +11,7 @@ function createRaindrop() {
   raindrop.setAttribute('direction', 'down');
   raindrop.setAttribute('scrollamount', random(20));
   raindrop.setAttribute('scrolldelay', random(50));
-  raindrop.setAttribute('height', 5000);
+  raindrop.setAttribute('height', 3000);
   raindrop.setAttribute('style', 'position:absolute; left:' + random(100) + '%; top:0px; width:40; height:100%;');
   raindrop.innerHTML = emojis[random(emojis.length)];
   return raindrop;

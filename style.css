@@ -29,6 +29,11 @@ body {
   background-color: #AB47BC;
 }
 
+button {
+  position: relative;
+  z-index: 1000;
+}
+
 img {
   margin-top: 1em;
   margin-bottom: 1em;
