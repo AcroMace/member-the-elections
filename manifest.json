@@ -1,0 +1,16 @@
+{
+  "name": "i member elections",
+  "description": "Replace Facebook posts with r/the_donald posts",
+  "version": "1.0",
+
+  "content_scripts": [{
+    "matches": ["http://*.facebook.com/*", "https://*.facebook.com/*"],
+    "js": ["js/jquery.js", "js/i-member.js"]
+  }],
+
+  "permissions": [
+    "activeTab"
+  ],
+
+  "manifest_version": 2
+}
