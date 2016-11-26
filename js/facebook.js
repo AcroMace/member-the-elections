@@ -42,15 +42,15 @@ function getCards() {
   return $('.userContentWrapper');
 }
 
-function getTextDiv(card) {
+function getTextForCard(card) {
   return $(card).find('.userContent');
 }
 
-function getImages(card) {
+function getImagesForCard(card) {
   return $(card).find('.uiScaledImageContainer img');
 }
 
-function getLinks(card) {
+function getLinksForCard(card) {
   return $(card).find('a');
 }
 
@@ -58,15 +58,15 @@ function getLinks(card) {
 // Facebook modifier
 //
 
-function hideVideos() {
+function hideVideosOnFacebook() {
   $('video').closest('.mtm').remove();
 }
 
-function hideCaptions() {
+function hideCaptionsOnFacebook() {
   $('._6m3').remove();
 }
 
-function updateTexts() {
+function updateTextsOnFacebook() {
   getCards().each(function (index, card) {
     // Skip setting the article on the card if already set
     if (articlesAlreadySet[index]) {
@@ -76,22 +76,9 @@ function updateTexts() {
     }
     // Set the article on the card
     const article = getArticleForIndex(index);
-    getTextDiv(card).html('<p>' + article.text + '</p>');
-    getImages(card).attr('src', article.image || DEFAULT_IMAGE);
-    getLinks(card).attr('href', article.link || DEFAULT_LINK);
-  });
-}
-
-//
-// r/the_donald parser
-//
-
-function getDonaldPosts(callback) {
-  chrome.runtime.sendMessage({ type: 'shouldFetchDonald' }, function (response) {
-    // Get rid of the placeholders
-    articlesAlreadySet = {};
-    // Set the response
-    articles = response;
+    getTextForCard(card).html('<p>' + article.text + '</p>');
+    getImagesForCard(card).attr('src', article.image || DEFAULT_IMAGE);
+    getLinksForCard(card).attr('href', article.link || DEFAULT_LINK);
   });
 }
 
@@ -99,15 +86,8 @@ function getDonaldPosts(callback) {
 // Main
 //
 
-// Initial update
-updateTexts();
-
-// Donald
-getDonaldPosts();
-
-// Keep updating
-setInterval(function () {
-  hideVideos();
-  hideCaptions();
-  updateTexts();
-}, UPDATE_INTERVAL);
+function update() {
+  hideVideosOnFacebook();
+  hideCaptionsOnFacebook();
+  updateTextsOnFacebook();
+}

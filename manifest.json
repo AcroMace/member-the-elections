@@ -1,11 +1,14 @@
 {
   "name": "member the elections?",
-  "description": "Replace Facebook posts with r/the_donald posts",
+  "description": "Replace Facebook and Twitter posts with r/the_donald posts",
   "version": "1.0",
 
   "content_scripts": [{
     "matches": ["http://*.facebook.com/*", "https://*.facebook.com/*"],
-    "js": ["js/jquery.js", "js/i-member.js"]
+    "js": ["js/jquery.js", "js/facebook.js", "js/main.js"]
+  }, {
+    "matches": ["http://twitter.com/*", "https://twitter.com/*"],
+    "js": ["js/jquery.js", "js/twitter.js", "js/main.js"]
   }],
 
   "background": {
