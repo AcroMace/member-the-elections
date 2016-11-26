@@ -1,5 +1,5 @@
 {
-  "name": "i member elections",
+  "name": "member the elections?",
   "description": "Replace Facebook posts with r/the_donald posts",
   "version": "1.0",
 
@@ -10,6 +10,12 @@
 
   "background": {
     "scripts": ["js/jquery.js", "js/background.js"]
+  },
+
+  "icons": {
+    "16": "res/icon/16x16.png",
+    "48": "res/icon/48x48.png",
+    "128": "res/icon/128x128.png"
   },
 
   "permissions": [
