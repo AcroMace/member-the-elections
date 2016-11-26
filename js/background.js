@@ -1,3 +1,5 @@
+'use_strict';
+
 //
 // Variables and constants
 //

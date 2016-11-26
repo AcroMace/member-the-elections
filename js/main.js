@@ -1,3 +1,5 @@
+'use_strict';
+
 //
 // r/the_donald parser
 //
