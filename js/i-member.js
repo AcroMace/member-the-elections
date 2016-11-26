@@ -4,35 +4,94 @@
 // Variables and constants
 //
 
+// Request type to fetch the articles from r/the_donald
+const shouldFetchDonaldRequestType = 'shouldFetchDonald';
+
 // Interval in milliseconds to keep rescanning posts to update
-const UPDATE_INTERVAL = 3000;
+const UPDATE_INTERVAL = 100;
+
+// Default text to display if the article has no title (not sure if possible)
+const DEFAULT_TEXT = 'Ayy lmao';
+// Default image to display when an article does not have a preview picture
+const DEFAULT_IMAGE = 'https://cdn.theatlantic.com/assets/media/img/2016/05/select_32/hero_wide_640.jpg?1463509000';
+// Default link to set when the article does not have a link (not sure if this is possible)
+const DEFAULT_LINK = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 
 // Articles to display
 let articles = [{
-  text: 'Ayy lmao',
-  image: 'https://cdn.theatlantic.com/assets/media/img/2016/05/select_32/hero_wide_640.jpg?1463509000'
+  text: DEFAULT_TEXT,
+  image: DEFAULT_IMAGE,
+  link: DEFAULT_LINK
 }];
+
+// { index: true if the article was already set on the card }
+// Used to get rid of the flashing images and to prevent re-setting a card over and over again
+let articlesAlreadySet = {};
 
 //
 // Facebook parser
 //
 
-function getTextForIndex(index) {
-  return articles[index % articles.length].text;
+// Get the article to display for the index of a card
+function getArticleForIndex(index) {
+  return articles[index % articles.length];
 }
 
-function getTextDivs() {
-  return $('.userContent');
+// Get all of the cards that have currently been loaded
+function getCards() {
+  return $('.userContentWrapper');
+}
+
+function getTextDiv(card) {
+  return $(card).find('.userContent');
+}
+
+function getImages(card) {
+  return $(card).find('.uiScaledImageContainer img');
+}
+
+function getLinks(card) {
+  return $(card).find('a');
 }
 
 //
 // Facebook modifier
 //
 
+function hideVideos() {
+  $('video').closest('.mtm').remove();
+}
+
+function hideCaptions() {
+  $('._6m3').remove();
+}
+
 function updateTexts() {
-  getTextDivs().each(function (index, textDiv) {
-    console.log(textDiv);
-    $(textDiv).html('<p>' + getTextForIndex(index) + '</p>');
+  getCards().each(function (index, card) {
+    // Skip setting the article on the card if already set
+    if (articlesAlreadySet[index]) {
+      return true;
+    } else {
+      articlesAlreadySet[index] = true;
+    }
+    // Set the article on the card
+    const article = getArticleForIndex(index);
+    getTextDiv(card).html('<p>' + article.text + '</p>');
+    getImages(card).attr('src', article.image || DEFAULT_IMAGE);
+    getLinks(card).attr('href', article.link || DEFAULT_LINK);
+  });
+}
+
+//
+// r/the_donald parser
+//
+
+function getDonaldPosts(callback) {
+  chrome.runtime.sendMessage({ type: 'shouldFetchDonald' }, function (response) {
+    // Get rid of the placeholders
+    articlesAlreadySet = {};
+    // Set the response
+    articles = response;
   });
 }
 
@@ -43,7 +102,12 @@ function updateTexts() {
 // Initial update
 updateTexts();
 
+// Donald
+getDonaldPosts();
+
 // Keep updating
 setInterval(function () {
+  hideVideos();
+  hideCaptions();
   updateTexts();
 }, UPDATE_INTERVAL);

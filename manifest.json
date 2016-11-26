@@ -8,6 +8,10 @@
     "js": ["js/jquery.js", "js/i-member.js"]
   }],
 
+  "background": {
+    "scripts": ["js/jquery.js", "js/background.js"]
+  },
+
   "permissions": [
     "activeTab"
   ],
