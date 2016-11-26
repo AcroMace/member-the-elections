@@ -1,0 +1,39 @@
+body {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  text-align: center;
+  height: 100%;
+  background-attachment: fixed;
+  background-color: #ff9800;
+  background: #ff9800;
+  background: -webkit-linear-gradient(#ff9800, #a36bb6);
+  background: -o-linear-gradient(#ff9800, #a36bb6);
+  background: -moz-linear-gradient(#ff9800, #a36bb6);
+  background: linear-gradient(#ff9800, #a36bb6);
+}
+
+#icon {
+  margin-top: 2em;
+}
+
+.description-container {
+  padding: 2em;
+}
+
+.btn-github {
+  margin: 2em;
+  background-color: #a36bb6;
+}
+
+.btn-github:hover {
+  background-color: #AB47BC;
+}
+
+img {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+marquee {
+  font-size: 20px;
+}
